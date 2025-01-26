@@ -317,3 +317,74 @@ body {
     height: auto;
     border-radius: 15px;
 }
+
+ /* Custom Styles */
+ .hero-section {
+  padding: 50px 20px;
+}
+
+.hero-image {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+}
+
+.main-btn {
+  padding: 10px 20px;
+  margin-right: 10px;
+  font-size: 1rem;
+}
+
+.main-text {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .navbar-brand img {
+      height: 40px;
+      width: 40px;
+  }
+
+  .hero-section {
+      text-align: center;
+  }
+
+  .hero-section .main-text {
+      font-size: 1.5rem;
+  }
+
+  .hero-section .para-1 {
+      font-size: 0.9rem;
+  }
+
+  .button-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+  }
+
+  .main-btn {
+      width: 100%;
+      font-size: 0.9rem;
+  }
+
+  .hero-image {
+      max-width: 300px;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-section {
+      padding: 30px 10px;
+  }
+
+  .hero-section .main-text {
+      font-size: 1.2rem;
+  }
+
+  .hero-section .para-1 {
+      font-size: 0.8rem;
+  }
+}
