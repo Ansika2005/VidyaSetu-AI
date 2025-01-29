@@ -18,13 +18,25 @@
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Bootstrap JS Bundle (includes Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Your custom CSS -->
+    <link rel="stylesheet" href="./css/style.css">
+
 </head>
 
 <body>
 
     <!-- Navbar -->
     <header id="navbar">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3 fixed-top">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">
                     <img src="./Images/Logo.jpg" height="50" width="50" alt="VidyaSetu - Ai"
@@ -35,7 +47,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-                    <ul class="navbar-nav">
+                    <ul class="navbar-nav me-3">
                         <li class="nav-item">
                             <a class="nav-link active" href="#home">Home <i class="fa-solid fa-house"></i></a>
                         </li>
@@ -51,7 +63,13 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#studybuddyai">Study Buddy AI <i class="fa-solid fa-robot"></i></a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#contact">Contact <i class="fa-solid fa-envelope"></i></a>
+                        </li>
                     </ul>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#authModal">
+                        Login / Sign Up <i class="fas fa-user ms-1"></i>
+                    </button>
                 </div>
             </div>
         </nav>
@@ -91,10 +109,190 @@
         </div>
     </section>
 
-    <!-- Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-pzjw8f+ua7Kw1TIq0v8FqHJXvH6MMKhg7+esDBz1oVqdyBw2yktdiEM/y0f6j4ks"
-        crossorigin="anonymous"></script>
+    <!-- Features Section -->
+    <section id="features" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">Our Features</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="fa-solid fa-brain fa-3x mb-3 text-primary"></i>
+                            <h3 class="card-title">AI-Powered Learning</h3>
+                            <p class="card-text">Personalized learning paths adapted to your unique needs and pace.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="fa-solid fa-chart-line fa-3x mb-3 text-primary"></i>
+                            <h3 class="card-title">Progress Tracking</h3>
+                            <p class="card-text">Real-time analytics and insights to monitor your learning journey.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="fa-solid fa-users fa-3x mb-3 text-primary"></i>
+                            <h3 class="card-title">Collaborative Learning</h3>
+                            <p class="card-text">Connect with peers and engage in group learning activities.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="bg-light py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">Contact Us</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <form>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" placeholder="Your Name" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="email" class="form-control" placeholder="Your Email" required>
+                        </div>
+                        <div class="mb-3">
+                            <textarea class="form-control" rows="5" placeholder="Your Message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>VidyaSetu AI</h5>
+                    <p>Transforming education through artificial intelligence</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#home" class="text-light">Home</a></li>
+                        <li><a href="#features" class="text-light">Features</a></li>
+                        <li><a href="#contact" class="text-light">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Connect With Us</h5>
+                    <div class="social-links">
+                        <a href="#" class="text-light me-3"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-light me-3"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-light me-3"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="text-light"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <p class="mb-0">&copy; 2024 VidyaSetu AI. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login/Signup Modal -->
+    <div class="modal fade" id="authModal" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <div class="modal-title w-100">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item flex-fill" role="presentation">
+                                <button class="nav-link active w-100" id="login-tab" data-bs-toggle="tab" data-bs-target="#login" type="button">Login</button>
+                            </li>
+                            <li class="nav-item flex-fill" role="presentation">
+                                <button class="nav-link w-100" id="signup-tab" data-bs-toggle="tab" data-bs-target="#signup" type="button">Sign Up</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="tab-content">
+                        <!-- Login Form -->
+                        <div class="tab-pane fade show active" id="login" role="tabpanel">
+                            <form id="loginForm" class="auth-form">
+                                <div class="mb-3">
+                                    <select class="form-select" required name="role">
+                                        <option value="">Select Role</option>
+                                        <option value="admin">Administrator</option>
+                                        <option value="teacher">Teacher</option>
+                                        <option value="student">Student</option>
+                                        <option value="parent">Parent</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <input type="email" class="form-control" placeholder="Email" required>
+                                </div>
+                                <div class="mb-3 password-field">
+                                    <input type="password" class="form-control" placeholder="Password" required>
+                                    <i class="fas fa-eye toggle-password"></i>
+                                </div>
+                                <div class="mb-3 d-flex justify-content-between">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="rememberMe">
+                                        <label class="form-check-label" for="rememberMe">Remember me</label>
+                                    </div>
+                                    <a href="#" class="forgot-password">Forgot Password?</a>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Login</button>
+                            </form>
+                        </div>
+
+                        <!-- Sign Up Form -->
+                        <div class="tab-pane fade" id="signup" role="tabpanel">
+                            <form id="signupForm" class="auth-form">
+                                <div class="mb-3">
+                                    <select class="form-select" required name="role">
+                                        <option value="">Select Role</option>
+                                        <option value="teacher">Teacher</option>
+                                        <option value="student">Student</option>
+                                        <option value="parent">Parent</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <input type="text" class="form-control" placeholder="Full Name" required>
+                                </div>
+                                <div class="mb-3">
+                                    <input type="email" class="form-control" placeholder="Email" required>
+                                </div>
+                                <div class="mb-3 password-field">
+                                    <input type="password" class="form-control" placeholder="Password" required>
+                                    <i class="fas fa-eye toggle-password"></i>
+                                </div>
+                                <div class="mb-3 password-field">
+                                    <input type="password" class="form-control" placeholder="Confirm Password" required>
+                                    <i class="fas fa-eye toggle-password"></i>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="terms" required>
+                                        <label class="form-check-label" for="terms">
+                                            I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+                                        </label>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom JS -->
+    <script src="./script.js"></script>
 
 </body>
 
