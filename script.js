@@ -1,272 +1,283 @@
 // DOM Elements
 const navbar = document.querySelector('.navbar');
 const navLinks = document.querySelectorAll('.nav-link');
-const cards = document.querySelectorAll('.card');
-const forms = document.querySelectorAll('form');
+const authForms = document.querySelectorAll('.auth-form');
+const loginForm = document.getElementById('loginForm');
+const registerForm = document.getElementById('registerForm');
 
-// Navbar Scroll Effect
-const handleNavbarScroll = () => {
-    const scrollPosition = window.scrollY;
-    if (scrollPosition > 50) {
-        navbar.classList.add('navbar-scrolled');
-    } else {
-        navbar.classList.remove('navbar-scrolled');
-    }
-};
-
-// Smooth Scrolling
-const smoothScroll = (e) => {
-    if (e.target.hash) {
-        e.preventDefault();
-        const targetElement = document.querySelector(e.target.hash);
-        if (targetElement) {
-            window.scrollTo({
-                top: targetElement.offsetTop - 70,
-                behavior: 'smooth'
-            });
-        }
-    }
-};
-
-// Animation on Scroll
-const observeElements = () => {
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('fade-in');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.card, .section-title, .hero-content')
-        .forEach(element => observer.observe(element));
-};
-
-// Form Validation and Submission
-const handleFormSubmit = (e) => {
+// Authentication Functions
+const handleLogin = async (e) => {
     e.preventDefault();
-    const form = e.target;
-    const formData = new FormData(form);
+    const formData = new FormData(loginForm);
+    const submitBtn = loginForm.querySelector('button[type="submit"]');
     
-    // Basic form validation
-    let isValid = true;
-    formData.forEach((value, key) => {
-        if (!value.trim()) {
-            isValid = false;
-            const input = form.querySelector(`[name="${key}"]`);
-            showError(input, 'This field is required');
-        }
-    });
-
-    if (isValid) {
-        // Show loading state
-        const submitBtn = form.querySelector('button[type="submit"]');
-        const originalText = submitBtn.innerHTML;
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+    try {
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
         submitBtn.disabled = true;
 
-        // Simulate form submission (replace with actual API call)
+        const response = await fetch('http://localhost:5000/api/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: formData.get('email'),
+                password: formData.get('password')
+            })
+        });
+
+        const data = await response.json();
+        
+        if (!response.ok) {
+            throw new Error(data.message || 'Login failed');
+        }
+
+        // Store auth data
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user', JSON.stringify(data.user));
+
+        showSuccess(loginForm, 'Login successful!');
         setTimeout(() => {
-            showSuccess(form);
-            form.reset();
-            submitBtn.innerHTML = originalText;
-            submitBtn.disabled = false;
+            window.location.href = '/dashboard.html';
         }, 1500);
+
+    } catch (error) {
+        showError(loginForm, error.message);
+    } finally {
+        submitBtn.innerHTML = 'Login';
+        submitBtn.disabled = false;
     }
 };
 
-// Error and Success Messages
-const showError = (element, message) => {
-    const errorDiv = document.createElement('div');
-    errorDiv.className = 'alert alert-danger mt-2';
-    errorDiv.textContent = message;
+const handleRegister = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(registerForm);
+    const submitBtn = registerForm.querySelector('button[type="submit"]');
     
-    const existingError = element.parentElement.querySelector('.alert');
-    if (existingError) existingError.remove();
-    
-    element.parentElement.appendChild(errorDiv);
-    element.classList.add('is-invalid');
+    try {
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Registering...';
+        submitBtn.disabled = true;
 
-    setTimeout(() => {
-        errorDiv.remove();
-        element.classList.remove('is-invalid');
-    }, 3000);
-};
+        // Validate role
+        const role = formData.get('role');
+        const validRoles = ['teacher', 'student', 'parent'];
+        if (!validRoles.includes(role)) {
+            throw new Error('Invalid role selected');
+        }
 
-const showSuccess = (form) => {
-    const successDiv = document.createElement('div');
-    successDiv.className = 'alert alert-success mt-3';
-    successDiv.textContent = 'Message sent successfully!';
-    
-    form.appendChild(successDiv);
-    
-    setTimeout(() => successDiv.remove(), 3000);
-};
-
-// Card Hover Effects
-const initializeCardEffects = () => {
-    cards.forEach(card => {
-        card.addEventListener('mouseenter', (e) => {
-            const icon = card.querySelector('.fa-3x');
-            if (icon) {
-                icon.style.transform = 'scale(1.2)';
-                icon.style.transition = 'transform 0.3s ease';
-            }
+        const response = await fetch('http://localhost:5000/api/auth/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: formData.get('name'),
+                email: formData.get('email'),
+                password: formData.get('password'),
+                role: role
+            })
         });
 
-        card.addEventListener('mouseleave', (e) => {
-            const icon = card.querySelector('.fa-3x');
-            if (icon) {
-                icon.style.transform = 'scale(1)';
-            }
-        });
-    });
-};
-
-// Active Navigation Link
-const updateActiveNavLink = () => {
-    const sections = document.querySelectorAll('section');
-    
-    window.addEventListener('scroll', () => {
-        let current = '';
+        const data = await response.json();
         
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
-            if (window.scrollY >= (sectionTop - sectionHeight/3)) {
-                current = section.getAttribute('id');
-            }
-        });
+        if (!response.ok) {
+            throw new Error(data.message || 'Registration failed');
+        }
 
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href').slice(1) === current) {
-                link.classList.add('active');
-            }
+        showSuccess(registerForm, 'Registration successful! Please login.');
+        setTimeout(() => {
+            // Switch to login tab
+            document.querySelector('#login-tab').click();
+        }, 1500);
+
+    } catch (error) {
+        showError(registerForm, error.message);
+    } finally {
+        submitBtn.innerHTML = 'Register';
+        submitBtn.disabled = false;
+    }
+};
+
+// UI Helper Functions
+const showError = (form, message) => {
+    const alertDiv = document.createElement('div');
+    alertDiv.className = 'alert alert-danger mt-3';
+    alertDiv.textContent = message;
+    
+    // Remove existing alerts
+    form.querySelectorAll('.alert').forEach(alert => alert.remove());
+    
+    form.appendChild(alertDiv);
+    setTimeout(() => alertDiv.remove(), 3000);
+};
+
+const showSuccess = (form, message) => {
+    const alertDiv = document.createElement('div');
+    alertDiv.className = 'alert alert-success mt-3';
+    alertDiv.textContent = message;
+    
+    // Remove existing alerts
+    form.querySelectorAll('.alert').forEach(alert => alert.remove());
+    
+    form.appendChild(alertDiv);
+};
+
+// Password Toggle Functionality
+const initializePasswordToggles = () => {
+    document.querySelectorAll('.toggle-password').forEach(toggleBtn => {
+        toggleBtn.addEventListener('click', () => {
+            const passwordInput = toggleBtn.previousElementSibling;
+            const type = passwordInput.getAttribute('type');
+            passwordInput.setAttribute('type', type === 'password' ? 'text' : 'password');
+            toggleBtn.classList.toggle('fa-eye');
+            toggleBtn.classList.toggle('fa-eye-slash');
         });
     });
 };
 
-// Auth Modal Functionality
-const initializeAuthModal = () => {
-    const togglePasswordBtns = document.querySelectorAll('.toggle-password');
-    const authForms = document.querySelectorAll('.auth-form');
-    
-    // Password visibility toggle
-    togglePasswordBtns.forEach(btn => {
+// Check Authentication Status
+const checkAuthStatus = () => {
+    const token = localStorage.getItem('token');
+    const user = JSON.parse(localStorage.getItem('user') || 'null');
+
+    if (token && user) {
+        // Update UI for logged-in user
+        const loginBtn = document.querySelector('[data-bs-target="#authModal"]');
+        if (loginBtn) {
+            loginBtn.textContent = 'Logout';
+            loginBtn.setAttribute('data-bs-target', '');
+            loginBtn.addEventListener('click', handleLogout);
+        }
+
+        // Add user info to navbar
+        const navbar = document.querySelector('.navbar-nav');
+        if (navbar) {
+            const userInfo = document.createElement('li');
+            userInfo.className = 'nav-item';
+            userInfo.innerHTML = `
+                <span class="nav-link">
+                    Welcome, ${user.name} (${user.role})
+                </span>
+            `;
+            navbar.appendChild(userInfo);
+        }
+    }
+};
+
+const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    window.location.reload();
+};
+
+// Study Buddy AI Functions
+const initializeStudyBuddyAI = () => {
+    const chatForm = document.getElementById('chatForm');
+    const chatMessages = document.getElementById('chatMessages');
+    const userInput = document.getElementById('userInput');
+    const themeToggle = document.getElementById('themeToggle');
+    const quickActionBtns = document.querySelectorAll('.quick-action-btn');
+    const tryFullVersionBtn = document.getElementById('tryFullVersion');
+
+    // Theme Toggle
+    themeToggle?.addEventListener('click', () => {
+        const isDark = document.body.getAttribute('data-theme') === 'dark';
+        document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+        themeToggle.innerHTML = isDark ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+    });
+
+    // Try Full Version button click handler
+    tryFullVersionBtn?.addEventListener('click', () => {
+        const authModal = new bootstrap.Modal(document.getElementById('authModal'));
+        authModal.show();
+    });
+
+    // Quick Action Buttons
+    quickActionBtns?.forEach(btn => {
         btn.addEventListener('click', () => {
-            const input = btn.previousElementSibling;
-            const type = input.getAttribute('type');
-            input.setAttribute('type', type === 'password' ? 'text' : 'password');
-            btn.classList.toggle('fa-eye');
-            btn.classList.toggle('fa-eye-slash');
+            addMessage(btn.textContent, 'user');
+            simulateAIResponse(btn.textContent);
         });
     });
-    
-    // Form submission
-    authForms.forEach(form => {
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const formData = new FormData(form);
-            const submitBtn = form.querySelector('button[type="submit"]');
-            
-            // Show loading state
-            const originalText = submitBtn.innerHTML;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
-            submitBtn.disabled = true;
-            
-            // Simulate API call
-            setTimeout(() => {
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-                
-                // Show success message
-                const successDiv = document.createElement('div');
-                successDiv.className = 'alert alert-success mt-3';
-                successDiv.textContent = form.id === 'loginForm' ? 
-                    'Login successful!' : 'Account created successfully!';
-                form.appendChild(successDiv);
-                
-                setTimeout(() => {
-                    successDiv.remove();
-                    if (form.id === 'loginForm') {
-                        window.location.href = '/dashboard.html'; // Redirect to dashboard
-                    } else {
-                        // Switch to login tab after successful signup
-                        document.querySelector('#login-tab').click();
-                    }
-                }, 1500);
-            }, 2000);
-        });
+
+    // Chat Form Submit
+    chatForm?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const message = userInput.value.trim();
+        if (message) {
+            addMessage(message, 'user');
+            userInput.value = '';
+            simulateAIResponse(message);
+        }
     });
+
+    // Add message to chat
+    const addMessage = (text, type) => {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${type}-message`;
+        messageDiv.textContent = text;
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    };
+
+    // Show typing indicator
+    const showTypingIndicator = () => {
+        const indicator = document.querySelector('.typing-indicator');
+        if (indicator) {
+            indicator.style.display = 'block';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+    };
+
+    // Hide typing indicator
+    const hideTypingIndicator = () => {
+        const indicator = document.querySelector('.typing-indicator');
+        if (indicator) {
+            indicator.style.display = 'none';
+        }
+    };
+
+    // Simulate AI response
+    const simulateAIResponse = (userMessage) => {
+        showTypingIndicator();
+        
+        // Predefined responses for demo
+        const responses = {
+            "Explain Newton's Laws": "Newton's three laws of motion are fundamental principles of physics:\n1. An object at rest stays at rest, and an object in motion stays in motion unless acted upon by a force.\n2. Force equals mass times acceleration (F = ma).\n3. For every action, there is an equal and opposite reaction.",
+            "Take a Math Quiz": "Let's start with a math problem:\nIf x + 2 = 5, what is the value of x?\nA) 2\nB) 3\nC) 4\nD) 5",
+            "Get Study Tips": "Here are some effective study tips:\n1. Use active recall\n2. Space out your studying\n3. Create mind maps\n4. Teach others\n5. Take regular breaks",
+            "Practice Problems": "Would you like practice problems in:\n1. Mathematics\n2. Physics\n3. Chemistry\n4. Biology\nJust type the subject number!",
+            "Homework Help": "I can help with your homework! Please specify the subject and problem you're working on."
+        };
+
+        setTimeout(() => {
+            hideTypingIndicator();
+            const response = responses[userMessage] || "I understand you're asking about " + userMessage + ". Could you please be more specific about what you'd like to know?";
+            addMessage(response, 'ai');
+        }, 1500);
+    };
 };
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize Bootstrap Modal
-    const authModal = new bootstrap.Modal(document.getElementById('authModal'));
-    
-    // Add click event listener to the login button
-    const loginButton = document.querySelector('[data-bs-target="#authModal"]');
-    if (loginButton) {
-        loginButton.addEventListener('click', () => {
-            console.log('Login button clicked');
-            authModal.show();
-        });
-    } else {
-        console.error('Login button not found');
-    }
+    // Add form submit event listeners
+    loginForm?.addEventListener('submit', handleLogin);
+    registerForm?.addEventListener('submit', handleRegister);
 
-    // Initialize other features
-    initializeAuthModal();
+    // Initialize password toggles
+    initializePasswordToggles();
 
-    // Event Listeners
-    window.addEventListener('scroll', handleNavbarScroll);
-    document.querySelectorAll('a[href^="#"]').forEach(link => {
-        link.addEventListener('click', smoothScroll);
-    });
-    forms.forEach(form => {
-        form.addEventListener('submit', handleFormSubmit);
+    // Check authentication status
+    checkAuthStatus();
+
+    // Initialize Bootstrap components if needed
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
     });
 
-    // Initialize features
-    observeElements();
-    initializeCardEffects();
-    updateActiveNavLink();
-
-    // Add loading animation
-    document.body.classList.add('loaded');
-});
-
-// Add to your CSS
-const styles = `
-    .loaded {
-        opacity: 1;
-        transition: opacity 0.5s ease;
+    // Initialize Study Buddy AI if on study buddy page
+    if (window.location.pathname.includes('studybuddy.html')) {
+        initializeStudyBuddyAI();
     }
-
-    .is-invalid {
-        border-color: #dc3545 !important;
-    }
-
-    .alert {
-        animation: slideIn 0.3s ease;
-    }
-
-    @keyframes slideIn {
-        from {
-            opacity: 0;
-            transform: translateY(-10px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-`;
-
-// Create and append style element
-const styleSheet = document.createElement('style');
-styleSheet.textContent = styles;
-document.head.appendChild(styleSheet);
+}); 

@@ -1,44 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="description" content="VidyaSetu Ai : All-in-one web-based learning platform " />
-    <title>VidyaSetu Ai</title>
-
-    <link rel="shortcut icon" href="./Images/Logo.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="./css/style.css">
-
-    <!-- Bootstrap CDN link -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
-
-    <!-- Font Awesome CDN -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-
-    <!-- Bootstrap CSS -->
+    <title>Study Buddy AI - VidyaSetu</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Bootstrap JS Bundle (includes Popper) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Your custom CSS -->
     <link rel="stylesheet" href="./css/style.css">
-
+    <link rel="stylesheet" href="./css/studybuddy.css">
 </head>
-
 <body>
-
-    <!-- Navbar -->
+    <!-- Navbar (same as main page) -->
     <header id="navbar">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3 fixed-top">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="index.html">
                     <img src="./Images/Logo.jpg" height="50" width="50" alt="VidyaSetu - Ai"
                         class="rounded-circle border border-light" />
                 </a>
@@ -49,22 +25,22 @@
                 <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                     <ul class="navbar-nav me-3">
                         <li class="nav-item">
-                            <a class="nav-link active" href="#home">Home <i class="fa-solid fa-house"></i></a>
+                            <a class="nav-link" href="index.html">Home <i class="fa-solid fa-house"></i></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#dashboard">Dashboard <i class="fa-solid fa-chart-bar"></i></a>
+                            <a class="nav-link" href="index.html#dashboard">Dashboard <i class="fa-solid fa-chart-bar"></i></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#parentportal">Parent Portal <i class="fa-regular fa-user"></i></a>
+                            <a class="nav-link" href="index.html#parentportal">Parent Portal <i class="fa-regular fa-user"></i></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#weeklychallenges">Weekly Challenges <i class="fa-solid fa-clipboard-list"></i></a>
+                            <a class="nav-link" href="index.html#weeklychallenges">Weekly Challenges <i class="fa-solid fa-clipboard-list"></i></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="studybuddy.html">Study Buddy AI <i class="fa-solid fa-robot"></i></a>
+                            <a class="nav-link active" href="studybuddy.html">Study Buddy AI <i class="fa-solid fa-robot"></i></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#contact">Contact <i class="fa-solid fa-envelope"></i></a>
+                            <a class="nav-link" href="index.html#contact">Contact <i class="fa-solid fa-envelope"></i></a>
                         </li>
                     </ul>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#authModal">
@@ -75,130 +51,49 @@
         </nav>
     </header>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-7 col-md-12 d-flex flex-column justify-content-center align-items-start text-md-start text-center">
-                    <h1 class="primary-text">Welcome to VidyaSetu AI</h1>
-                    <h2 class="main-text">Personalized Learning, Powered by AI</h2>
-                    <p class="para-1 mt-4">
-                        Empowering students, teachers, and parents with intelligent learning tools.
-                        <br />
-                        <span style="text-decoration: underline 1px; text-underline-offset: 2px;">
-                            Transforming education with AI-driven insights and personalized experiences.
-                        </span>
-                    </p>
-                    <div class="button-container">
-                        <a href="#" data-bs-toggle="modal" data-bs-target="#signUpLoginModal">
-                            <button type="button" class="main-btn btn btn-primary">
-                                Sign Up / Login <i class="fa-solid fa-user-plus"></i>
-                            </button>
-                        </a>
-                        <a href="#features">
-                            <button type="button" class="main-btn btn btn-secondary">
-                                Explore Features <i class="fa-solid fa-rocket"></i>
-                            </button>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-5 col-md-12 d-flex justify-content-center align-items-center mt-4 mt-lg-0">
-                    <img src="./Images/Ai.jpg" alt="AI Learning Platform" class="hero-image" />
+    <div class="container mt-5 pt-5">
+        <div class="chat-container">
+            <div class="chat-header">
+                <h4 class="mb-0">Study Buddy AI</h4>
+                <div>
+                    <button class="theme-toggle" id="themeToggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="btn btn-outline-light ms-2" id="tryFullVersion">
+                        Try Full Version
+                    </button>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- Features Section -->
-    <section id="features" class="py-5">
-        <div class="container">
-            <h2 class="text-center mb-5">Our Features</h2>
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="card h-100">
-                        <div class="card-body text-center">
-                            <i class="fa-solid fa-brain fa-3x mb-3 text-primary"></i>
-                            <h3 class="card-title">AI-Powered Learning</h3>
-                            <p class="card-text">Personalized learning paths adapted to your unique needs and pace.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card h-100">
-                        <div class="card-body text-center">
-                            <i class="fa-solid fa-chart-line fa-3x mb-3 text-primary"></i>
-                            <h3 class="card-title">Progress Tracking</h3>
-                            <p class="card-text">Real-time analytics and insights to monitor your learning journey.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card h-100">
-                        <div class="card-body text-center">
-                            <i class="fa-solid fa-users fa-3x mb-3 text-primary"></i>
-                            <h3 class="card-title">Collaborative Learning</h3>
-                            <p class="card-text">Connect with peers and engage in group learning activities.</p>
-                        </div>
-                    </div>
-                </div>
+            <div class="quick-actions">
+                <button class="quick-action-btn">Explain Newton's Laws</button>
+                <button class="quick-action-btn">Take a Math Quiz</button>
+                <button class="quick-action-btn">Get Study Tips</button>
+                <button class="quick-action-btn">Practice Problems</button>
+                <button class="quick-action-btn">Homework Help</button>
             </div>
-        </div>
-    </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="bg-light py-5">
-        <div class="container">
-            <h2 class="text-center mb-4">Contact Us</h2>
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <form>
-                        <div class="mb-3">
-                            <input type="text" class="form-control" placeholder="Your Name" required>
-                        </div>
-                        <div class="mb-3">
-                            <input type="email" class="form-control" placeholder="Your Email" required>
-                        </div>
-                        <div class="mb-3">
-                            <textarea class="form-control" rows="5" placeholder="Your Message" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Send Message</button>
-                    </form>
+            <div class="chat-messages" id="chatMessages">
+                <div class="message ai-message">
+                    Hi! I'm your Study Buddy AI. How can I help you today?
+                </div>
+                <div class="typing-indicator">
+                    <span></span>
+                    <span></span>
+                    <span></span>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- Footer -->
-    <footer class="bg-dark text-light py-4">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <h5>VidyaSetu AI</h5>
-                    <p>Transforming education through artificial intelligence</p>
-                </div>
-                <div class="col-md-4">
-                    <h5>Quick Links</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="#home" class="text-light">Home</a></li>
-                        <li><a href="#features" class="text-light">Features</a></li>
-                        <li><a href="#contact" class="text-light">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <h5>Connect With Us</h5>
-                    <div class="social-links">
-                        <a href="#" class="text-light me-3"><i class="fab fa-facebook"></i></a>
-                        <a href="#" class="text-light me-3"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="text-light me-3"><i class="fab fa-linkedin"></i></a>
-                        <a href="#" class="text-light"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="text-center mt-4">
-                <p class="mb-0">&copy; 2024 VidyaSetu AI. All rights reserved.</p>
+            <div class="chat-input">
+                <form id="chatForm">
+                    <input type="text" placeholder="Type your question here..." id="userInput" required>
+                    <button type="submit" class="send-btn">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
             </div>
         </div>
-    </footer>
+    </div>
 
     <!-- Login/Signup Modal -->
     <div class="modal fade" id="authModal" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
@@ -290,9 +185,7 @@
         </div>
     </div>
 
-    <!-- Custom JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="./script.js"></script>
-
 </body>
-
-</html>
+</html> 
