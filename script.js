@@ -8,93 +8,79 @@ const registerForm = document.getElementById('registerForm');
 // Authentication Functions
 const handleLogin = async (e) => {
     e.preventDefault();
-    const formData = new FormData(loginForm);
-    const submitBtn = loginForm.querySelector('button[type="submit"]');
+    
+    const email = document.querySelector('#login input[type="email"]').value;
+    const password = document.querySelector('#login input[type="password"]').value;
+    const role = document.querySelector('#login select[name="role"]').value;
     
     try {
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
-        submitBtn.disabled = true;
-
         const response = await fetch('http://localhost:5000/api/auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                email: formData.get('email'),
-                password: formData.get('password')
-            })
+            body: JSON.stringify({ email, password, role })
         });
 
         const data = await response.json();
         
         if (!response.ok) {
-            throw new Error(data.message || 'Login failed');
+            throw new Error(data.message);
         }
 
         // Store auth data
         localStorage.setItem('token', data.token);
         localStorage.setItem('user', JSON.stringify(data.user));
 
-        showSuccess(loginForm, 'Login successful!');
-        setTimeout(() => {
-            window.location.href = '/dashboard.html';
-        }, 1500);
+        // Redirect based on role
+        const dashboardUrls = {
+            student: '/dashboards/student-dashboard.html',
+            teacher: '/dashboards/teacher-dashboard.html',
+            parent: '/dashboards/parent-dashboard.html'
+        };
+
+        window.location.href = dashboardUrls[data.user.role];
 
     } catch (error) {
         showError(loginForm, error.message);
-    } finally {
-        submitBtn.innerHTML = 'Login';
-        submitBtn.disabled = false;
     }
 };
 
-const handleRegister = async (e) => {
+const handleSignup = async (e) => {
     e.preventDefault();
-    const formData = new FormData(registerForm);
-    const submitBtn = registerForm.querySelector('button[type="submit"]');
+    
+    // Get form values directly
+    const name = document.querySelector('#signup input[type="text"]').value;
+    const email = document.querySelector('#signup input[type="email"]').value;
+    const password = document.querySelector('#signup input[type="password"]').value;
+    const role = document.querySelector('#signup select[name="role"]').value;
     
     try {
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Registering...';
-        submitBtn.disabled = true;
+        console.log('Attempting signup with:', { name, email, role }); // Debug log
 
-        // Validate role
-        const role = formData.get('role');
-        const validRoles = ['teacher', 'student', 'parent'];
-        if (!validRoles.includes(role)) {
-            throw new Error('Invalid role selected');
-        }
-
-        const response = await fetch('http://localhost:5000/api/auth/register', {
+        const response = await fetch('http://localhost:5000/api/auth/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                name: formData.get('name'),
-                email: formData.get('email'),
-                password: formData.get('password'),
-                role: role
-            })
+            body: JSON.stringify({ name, email, password, role })
         });
 
         const data = await response.json();
+        console.log('Signup response:', data); // Debug log
         
         if (!response.ok) {
             throw new Error(data.message || 'Registration failed');
         }
 
-        showSuccess(registerForm, 'Registration successful! Please login.');
+        showSuccess(document.querySelector('#signup'), 'Registration successful! Please login.');
         setTimeout(() => {
-            // Switch to login tab
             document.querySelector('#login-tab').click();
         }, 1500);
 
     } catch (error) {
-        showError(registerForm, error.message);
-    } finally {
-        submitBtn.innerHTML = 'Register';
-        submitBtn.disabled = false;
+        console.error('Signup error:', error);
+        showError(document.querySelector('#signup'), error.message);
     }
 };
 
@@ -261,8 +247,18 @@ const initializeStudyBuddyAI = () => {
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', () => {
     // Add form submit event listeners
-    loginForm?.addEventListener('submit', handleLogin);
-    registerForm?.addEventListener('submit', handleRegister);
+    const signupForm = document.querySelector('#signupForm');
+    const loginForm = document.querySelector('#loginForm');
+
+    if (signupForm) {
+        signupForm.addEventListener('submit', handleSignup);
+        console.log('Signup form listener added'); // Debug log
+    }
+
+    if (loginForm) {
+        loginForm.addEventListener('submit', handleLogin);
+        console.log('Login form listener added'); // Debug log
+    }
 
     // Initialize password toggles
     initializePasswordToggles();

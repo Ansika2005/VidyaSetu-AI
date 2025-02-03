@@ -1,0 +1,13 @@
+backend
+│── node_modules/
+│── config/
+│   └── db.js       (Database connection)
+│── routes/
+│   └── auth.js     (Login & Signup routes)
+│── models/
+│   └── userModel.js (User schema)
+│── middleware/
+│   └── authMiddleware.js (JWT authentication middleware)
+│── .env           (Environment variables)
+│── server.js      (Main server file)
+│── package.json
