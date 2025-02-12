@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parent Portal - VidyaSetu</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/parent-portal.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <header id="navbar">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3 fixed-top">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="index.html">
+                    <img src="./Images/Logo.jpg" height="50" width="50" alt="VidyaSetu - Ai" class="rounded-circle border border-light" />
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-3">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Home <i class="fa-solid fa-house"></i></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#parentportal">Parent Portal <i class="fa-regular fa-user"></i></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="studybuddy.html">Study Buddy AI <i class="fa-solid fa-robot"></i></a>
+                        </li>
+                    </ul>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#authModal">
+                        Login / Sign Up <i class="fas fa-user ms-1"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="parent-hero">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="display-4 fw-bold mb-4">Stay Connected with Your Child's Education</h1>
+                    <p class="lead mb-4">Monitor progress, communicate with teachers, and support your child's learning journey - all in one place.</p>
+                    <div class="cta-buttons">
+                        <button class="btn btn-primary btn-lg me-3" data-bs-toggle="modal" data-bs-target="#authModal">
+                            Get Started <i class="fas fa-arrow-right ms-2"></i>
+                        </button>
+                        <button class="btn btn-outline-primary btn-lg" onclick="scrollToFeatures()">
+                            Learn More <i class="fas fa-info-circle ms-2"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <img src="./Images/parent-portal.jpg" alt="Parent Portal" class="img-fluid rounded-3 shadow-lg">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+        <div class="container">
+            <h2 class="text-center mb-5">Why Choose Our Parent Portal?</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="icon-wrapper">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Real-time Progress Tracking</h3>
+                        <p>Monitor your child's academic performance, attendance, and assignments in real-time.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="icon-wrapper">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <h3>Direct Communication</h3>
+                        <p>Easy communication with teachers and school administration through our messaging system.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="icon-wrapper">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <h3>Event Calendar</h3>
+                        <p>Stay updated with school events, parent-teacher meetings, and important deadlines.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section class="demo-section">
+        <div class="container">
+            <h2 class="text-center mb-5">See What's Inside</h2>
+            <div class="demo-carousel">
+                <div id="demoCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#demoCarousel" data-bs-slide-to="0" class="active"></button>
+                        <button type="button" data-bs-target="#demoCarousel" data-bs-slide-to="1"></button>
+                        <button type="button" data-bs-target="#demoCarousel" data-bs-slide-to="2"></button>
+                    </div>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="./Images/parent-dashboard-demo.jpg" class="d-block w-100" alt="Dashboard Demo">
+                            <div class="carousel-caption">
+                                <h5>Intuitive Dashboard</h5>
+                                <p>Get a quick overview of your child's academic journey</p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="./Images/progress-tracking-demo.jpg" class="d-block w-100" alt="Progress Tracking">
+                            <div class="carousel-caption">
+                                <h5>Detailed Progress Reports</h5>
+                                <p>Track performance across all subjects</p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="./Images/communication-demo.jpg" class="d-block w-100" alt="Communication">
+                            <div class="carousel-caption">
+                                <h5>Easy Communication</h5>
+                                <p>Stay connected with teachers and staff</p>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#demoCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon"></span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#demoCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta-section">
+        <div class="container text-center">
+            <h2 class="mb-4">Ready to Get Started?</h2>
+            <p class="lead mb-4">Join thousands of parents who are already using our portal to stay involved in their children's education.</p>
+            <button class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#authModal">
+                Create Your Account <i class="fas fa-user-plus ms-2"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- Auth Modal (same as in index.html) -->
+    <div class="modal fade" id="authModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <div class="modal-title w-100">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item flex-fill" role="presentation">
+                                <button class="nav-link active w-100" id="login-tab" data-bs-toggle="tab" data-bs-target="#login" type="button">Login</button>
+                            </li>
+                            <li class="nav-item flex-fill" role="presentation">
+                                <button class="nav-link w-100" id="signup-tab" data-bs-toggle="tab" data-bs-target="#signup" type="button">Sign Up</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="tab-content">
+                        <!-- Login Form -->
+                        <div class="tab-pane fade show active" id="login" role="tabpanel">
+                            <form id="loginForm" class="auth-form">
+                                <div class="mb-3">
+                                    <input type="hidden" name="role" value="parent">
+                                </div>
+                                <div class="mb-3">
+                                    <input type="email" class="form-control" name="email" placeholder="Email" required>
+                                </div>
+                                <div class="mb-3 password-field">
+                                    <input type="password" class="form-control" name="password" placeholder="Password" required>
+                                    <i class="fas fa-eye toggle-password"></i>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Login</button>
+                            </form>
+                        </div>
+
+                        <!-- Sign Up Form -->
+                        <div class="tab-pane fade" id="signup" role="tabpanel">
+                            <form id="signupForm" class="auth-form">
+                                <div class="mb-3">
+                                    <input type="hidden" name="role" value="parent">
+                                </div>
+                                <div class="mb-3">
+                                    <input type="text" class="form-control" name="name" placeholder="Full Name" required>
+                                </div>
+                                <div class="mb-3">
+                                    <input type="email" class="form-control" name="email" placeholder="Email" required>
+                                </div>
+                                <div class="mb-3 password-field">
+                                    <input type="password" class="form-control" name="password" placeholder="Password" required>
+                                    <i class="fas fa-eye toggle-password"></i>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./js/parent-portal.js"></script>
+</body>
+</html> 

@@ -1,0 +1,148 @@
+/* Parent Portal Specific Styles */
+:root {
+    --primary-color: #4a90e2;
+    --secondary-color: #357abd;
+    --accent-color: #2ecc71;
+    --text-color: #2c3e50;
+    --light-bg: #f8f9fa;
+    --gradient: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+}
+
+/* Hero Section */
+.parent-hero {
+    padding: 120px 0 80px;
+    background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)),
+                url('../Images/pattern-bg.png');
+    background-size: cover;
+}
+
+.parent-hero h1 {
+    color: var(--text-color);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+}
+
+.parent-hero .lead {
+    color: #666;
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+}
+
+.cta-buttons {
+    margin-top: 2rem;
+}
+
+/* Features Section */
+.features-section {
+    padding: 80px 0;
+    background-color: var(--light-bg);
+}
+
+.feature-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.icon-wrapper {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem;
+    background: var(--gradient);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-wrapper i {
+    font-size: 2rem;
+    color: white;
+}
+
+.feature-card h3 {
+    color: var(--text-color);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.feature-card p {
+    color: #666;
+    margin-bottom: 0;
+}
+
+/* Demo Section */
+.demo-section {
+    padding: 80px 0;
+    background: white;
+}
+
+.demo-carousel {
+    max-width: 900px;
+    margin: 0 auto;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.carousel-item img {
+    height: 500px;
+    object-fit: cover;
+}
+
+.carousel-caption {
+    background: rgba(0,0,0,0.7);
+    border-radius: 10px;
+    padding: 1rem;
+}
+
+/* CTA Section */
+.cta-section {
+    padding: 80px 0;
+    background: var(--gradient);
+    color: white;
+}
+
+.cta-section h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+.cta-section .btn {
+    background: white;
+    color: var(--primary-color);
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+.cta-section .btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(255,255,255,0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .parent-hero {
+        padding: 100px 0 60px;
+        text-align: center;
+    }
+
+    .parent-hero img {
+        margin-top: 2rem;
+    }
+
+    .carousel-item img {
+        height: 300px;
+    }
+} 

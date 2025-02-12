@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const authRoutes = require("./routes/auth");
+const aiRoutes = require("./routes/ai");
 const path = require("path");
 require("dotenv").config();
 
@@ -14,6 +15,7 @@ app.use(express.static(path.join(__dirname, '../')));
 
 // Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/ai", aiRoutes);
 
 // Serve index.html for the root route
 app.get("/", (req, res) => {
