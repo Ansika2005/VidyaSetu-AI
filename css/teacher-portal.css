@@ -1,0 +1,165 @@
+/* Teacher Portal Specific Styles */
+:root {
+    --primary-color: #4a90e2;
+    --secondary-color: #357abd;
+    --accent-color: #2ecc71;
+    --text-color: #2c3e50;
+    --light-bg: #f8f9fa;
+    --gradient: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+}
+
+/* Hero Section */
+.teacher-hero {
+    padding: 120px 0 80px;
+    background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)),
+                url('../Images/pattern-bg.png');
+    background-size: cover;
+}
+
+.teacher-hero h1 {
+    color: var(--text-color);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+}
+
+.teacher-hero .lead {
+    color: #666;
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+}
+
+/* Features Section */
+.features-section {
+    padding: 80px 0;
+    background-color: var(--light-bg);
+}
+
+.feature-card {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 15px;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.feature-card .icon-wrapper {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+}
+
+/* Demo Section */
+.demo-section {
+    padding: 80px 0;
+    background: white;
+}
+
+.demo-carousel {
+    max-width: 900px;
+    margin: 0 auto;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.carousel-item img {
+    height: 500px;
+    object-fit: cover;
+}
+
+/* CTA Section */
+.cta-section {
+    padding: 80px 0;
+    background: var(--gradient);
+    color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .teacher-hero {
+        padding: 100px 0 60px;
+        text-align: center;
+    }
+
+    .carousel-item img {
+        height: 300px;
+    }
+}
+
+/* Quiz Generator Styles */
+.quiz-preview {
+    max-height: 400px;
+    overflow-y: auto;
+    background: #f8f9fa;
+}
+
+.quiz-preview ol {
+    padding-left: 1.5rem;
+}
+
+.quiz-preview li {
+    margin-bottom: 1.5rem;
+}
+
+.options {
+    margin-left: 1.5rem;
+}
+
+.btn-check:checked + .btn-outline-success {
+    background-color: var(--success);
+    color: white;
+}
+
+.btn-check:checked + .btn-outline-warning {
+    background-color: var(--warning);
+    color: white;
+}
+
+.btn-check:checked + .btn-outline-danger {
+    background-color: var(--danger);
+    color: white;
+}
+
+/* Steps Container Styles */
+.steps-container {
+    padding: 2rem;
+}
+
+.step {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+    position: relative;
+}
+
+.step-number {
+    width: 40px;
+    height: 40px;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    position: absolute;
+    top: -20px;
+    left: -20px;
+}
+
+.feature-highlight {
+    padding: 3rem;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+} 

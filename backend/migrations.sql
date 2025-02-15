@@ -60,4 +60,37 @@ CREATE TABLE tasks (
     due_date TIMESTAMP,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Teacher-Student relationship table
+CREATE TABLE teacher_students (
+    id SERIAL PRIMARY KEY,
+    teacher_id INTEGER REFERENCES users(id),
+    student_id INTEGER REFERENCES users(id),
+    class_code VARCHAR(8) UNIQUE,
+    joined_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(teacher_id, student_id)
+);
+
+-- Assignments table
+CREATE TABLE assignments (
+    id SERIAL PRIMARY KEY,
+    teacher_id INTEGER REFERENCES users(id),
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    quiz_data JSONB NOT NULL,
+    due_date TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Student assignments table (for tracking submissions)
+CREATE TABLE student_assignments (
+    id SERIAL PRIMARY KEY,
+    assignment_id INTEGER REFERENCES assignments(id),
+    student_id INTEGER REFERENCES users(id),
+    status VARCHAR(20) DEFAULT 'pending', -- pending, submitted, graded
+    submission JSONB,
+    score INTEGER,
+    submitted_at TIMESTAMP,
+    UNIQUE(assignment_id, student_id)
 ); 

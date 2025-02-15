@@ -145,8 +145,134 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- AI Quiz Generator Card -->
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <i class="fas fa-brain text-primary me-2"></i>
+                                AI Quiz Generator
+                            </h5>
+                            <p class="card-text">Generate quizzes from your teaching materials using AI.</p>
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#quizGeneratorModal">
+                                Create New Quiz <i class="fas fa-magic ms-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </main>
+
+            <!-- Recent Assignments Section -->
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Recent Assignments</h5>
+                            <div class="table-responsive">
+                                <table class="table" id="assignmentsTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Title</th>
+                                            <th>Due Date</th>
+                                            <th>Status</th>
+                                            <th>Submissions</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Assignments will be loaded here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Generator Modal -->
+        <div class="modal fade" id="quizGeneratorModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">AI Quiz Generator</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="quizGeneratorForm">
+                            <div class="mb-3">
+                                <label class="form-label">Upload Content</label>
+                                <div class="input-group">
+                                    <input type="file" class="form-control" id="contentFile" accept=".pdf,.txt,.doc,.docx" required>
+                                    <button class="btn btn-outline-secondary" type="button" id="pasteContent">
+                                        <i class="fas fa-paste"></i> Paste Text
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="mb-3 d-none" id="contentTextArea">
+                                <textarea class="form-control" rows="6" placeholder="Paste your content here..."></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Assignment Details</label>
+                                <input type="text" class="form-control mb-2" id="assignmentTitle" placeholder="Assignment Title" required>
+                                <textarea class="form-control mb-2" id="assignmentDescription" rows="2" placeholder="Assignment Description"></textarea>
+                                <input type="datetime-local" class="form-control" id="dueDate" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Quiz Settings</label>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <select class="form-select" id="quizType" required>
+                                            <option value="">Select Quiz Type</option>
+                                            <option value="multiple">Multiple Choice</option>
+                                            <option value="truefalse">True/False</option>
+                                            <option value="short">Short Answer</option>
+                                            <option value="mixed">Mixed</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="number" class="form-select" id="questionCount" 
+                                               min="5" max="20" value="10" required
+                                               placeholder="Number of Questions">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Difficulty Level</label>
+                                <div class="btn-group w-100" role="group">
+                                    <input type="radio" class="btn-check" name="difficulty" id="easy" value="easy" checked>
+                                    <label class="btn btn-outline-success" for="easy">Easy</label>
+                                    
+                                    <input type="radio" class="btn-check" name="difficulty" id="medium" value="medium">
+                                    <label class="btn btn-outline-warning" for="medium">Medium</label>
+                                    
+                                    <input type="radio" class="btn-check" name="difficulty" id="hard" value="hard">
+                                    <label class="btn btn-outline-danger" for="hard">Hard</label>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">
+                                Generate Quiz <i class="fas fa-magic ms-2"></i>
+                            </button>
+                        </form>
+                        <div id="quizResult" class="mt-4 d-none">
+                            <h6>Generated Quiz Preview</h6>
+                            <div class="quiz-preview border rounded p-3">
+                                <!-- Quiz will be displayed here -->
+                            </div>
+                            <div class="d-flex justify-content-end gap-2 mt-3">
+                                <button class="btn btn-secondary" id="editQuiz">
+                                    Edit Quiz <i class="fas fa-edit ms-2"></i>
+                                </button>
+                                <button class="btn btn-success" id="assignQuiz">
+                                    Assign Quiz <i class="fas fa-paper-plane ms-2"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

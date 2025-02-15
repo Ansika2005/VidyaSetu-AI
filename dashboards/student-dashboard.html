@@ -31,7 +31,9 @@
                     <a href="#"><i class="fas fa-chart-line"></i> Progress</a>
                 </li>
                 <li>
-                    <a href="#"><i class="fas fa-robot"></i> Study Buddy AI</a>
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#studyBuddyModal">
+                        <i class="fas fa-robot"></i> Study Buddy AI
+                    </a>
                 </li>
                 <li>
                     <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
@@ -122,6 +124,46 @@
                 </div>
             </div>
         </main>
+    </div>
+
+    <!-- Study Buddy AI Chat Modal -->
+    <div class="modal fade" id="studyBuddyModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Study Buddy AI</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <div class="chat-container m-0">
+                        <div class="quick-actions">
+                            <button class="quick-action-btn">Explain Newton's Laws</button>
+                            <button class="quick-action-btn">Take a Math Quiz</button>
+                            <button class="quick-action-btn">Get Study Tips</button>
+                            <button class="quick-action-btn">Practice Problems</button>
+                            <button class="quick-action-btn">Homework Help</button>
+                        </div>
+                        
+                        <div class="chat-messages" id="chatMessages">
+                            <div class="typing-indicator">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                        
+                        <div class="chat-input">
+                            <form id="chatForm">
+                                <input type="text" placeholder="Type your question here..." id="userInput" required>
+                                <button type="submit" class="send-btn">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

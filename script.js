@@ -32,7 +32,7 @@ const handleLogin = async (e) => {
         localStorage.setItem('token', data.token);
         localStorage.setItem('user', JSON.stringify(data.user));
 
-        // Redirect based on role
+        // Redirect to appropriate dashboard
         const dashboardUrls = {
             student: '/dashboards/student-dashboard.html',
             teacher: '/dashboards/teacher-dashboard.html',
@@ -153,7 +153,7 @@ const checkAuthStatus = () => {
 const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
-    window.location.reload();
+    window.location.href = '/index.html'; // Redirect to landing page after logout
 };
 
 // Study Buddy AI Functions
@@ -246,6 +246,9 @@ const initializeStudyBuddyAI = () => {
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', () => {
+    // Check if user is logged in and redirect if needed
+    checkAuthAndRedirect();
+    
     // Add form submit event listeners
     const signupForm = document.querySelector('#signupForm');
     const loginForm = document.querySelector('#loginForm');
@@ -276,4 +279,26 @@ document.addEventListener('DOMContentLoaded', () => {
     if (window.location.pathname.includes('studybuddy.html')) {
         initializeStudyBuddyAI();
     }
-}); 
+});
+
+// Add this function to handle auth check and redirect
+function checkAuthAndRedirect() {
+    // Don't redirect if already on a dashboard page
+    if (window.location.pathname.includes('/dashboards/')) {
+        return;
+    }
+
+    const token = localStorage.getItem('token');
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    if (token && user) {
+        // Redirect to appropriate dashboard based on role
+        const dashboardUrls = {
+            student: '/dashboards/student-dashboard.html',
+            teacher: '/dashboards/teacher-dashboard.html',
+            parent: '/dashboards/parent-dashboard.html'
+        };
+
+        window.location.href = dashboardUrls[user.role];
+    }
+} 

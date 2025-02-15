@@ -3,6 +3,8 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const authRoutes = require("./routes/auth");
 const aiRoutes = require("./routes/ai");
+const quizRoutes = require("./routes/quiz");
+const assignmentRoutes = require("./routes/assignments");
 const path = require("path");
 require("dotenv").config();
 
@@ -16,6 +18,8 @@ app.use(express.static(path.join(__dirname, '../')));
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/ai", aiRoutes);
+app.use("/api/quiz", quizRoutes);
+app.use("/api/assignments", assignmentRoutes);
 
 // Serve index.html for the root route
 app.get("/", (req, res) => {
