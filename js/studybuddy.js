@@ -53,11 +53,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // Add user message to chat
         addMessage({ text: message, type: 'user' });
         
-        // Show typing indicator
         showTypingIndicator();
 
         try {
-            const response = await fetch('http://localhost:5000/api/ai/chat', {
+            const response = await fetch('http://localhost:5001/api/ai/chat', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -65,12 +64,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: JSON.stringify({ message })
             });
 
-            const data = await response.json();
-            
-            // Hide typing indicator
-            hideTypingIndicator();
+            if (!response.ok) {
+                throw new Error('Failed to get response from AI');
+            }
 
-            // Add AI response to chat
+            const data = await response.json();
+            hideTypingIndicator();
             addMessage({
                 text: data.message,
                 type: data.type

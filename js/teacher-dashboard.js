@@ -22,7 +22,6 @@ if (quizForm) {
     quizForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
-        // Show loading state
         submitButton.disabled = true;
         submitButton.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Generating Quiz...';
 
@@ -31,9 +30,13 @@ if (quizForm) {
         const textArea = contentTextArea.querySelector('textarea');
 
         try {
+            // Clear previous quiz
+            quizResult.classList.add('d-none');
+            quizPreview.innerHTML = '';
+
             if (fileInput.files.length > 0) {
                 formData.append('content', fileInput.files[0]);
-            } else if (textArea.value.trim()) {
+            } else if (textArea?.value.trim()) {
                 formData.append('content', textArea.value.trim());
             } else {
                 throw new Error('Please provide content for the quiz');
@@ -43,7 +46,7 @@ if (quizForm) {
             formData.append('questionCount', document.getElementById('questionCount').value);
             formData.append('difficulty', document.querySelector('input[name="difficulty"]:checked').value);
 
-            const response = await fetch('/api/quiz/generate', {
+            const response = await fetch('http://localhost:5001/api/quiz/generate', {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -52,6 +55,7 @@ if (quizForm) {
             });
 
             const data = await response.json();
+            console.log('Quiz generation response:', data); // Debug log
 
             if (!response.ok) {
                 throw new Error(data.message || 'Failed to generate quiz');
@@ -62,15 +66,10 @@ if (quizForm) {
 
             // Display generated quiz
             displayQuiz(data.quiz);
-            quizResult.classList.remove('d-none');
 
         } catch (error) {
-            const errorDiv = document.createElement('div');
-            errorDiv.className = 'alert alert-danger mt-3';
-            errorDiv.textContent = error.message;
-            quizForm.appendChild(errorDiv);
-            
-            setTimeout(() => errorDiv.remove(), 5000);
+            console.error('Quiz generation error:', error);
+            showAlert(error.message, 'danger');
         } finally {
             submitButton.disabled = false;
             submitButton.innerHTML = originalButtonText;
@@ -127,6 +126,14 @@ if (assignQuizBtn) {
 }
 
 function displayQuiz(quiz) {
+    console.log('Displaying quiz:', quiz); // Debug log
+
+    if (!Array.isArray(quiz)) {
+        console.error('Quiz is not an array:', quiz);
+        showAlert('Invalid quiz format received', 'danger');
+        return;
+    }
+
     let html = '<ol>';
     quiz.forEach((question, index) => {
         html += `<li class="mb-3">
@@ -134,10 +141,14 @@ function displayQuiz(quiz) {
         
         if (question.options) {
             html += '<div class="options">';
-            question.options.forEach(option => {
+            question.options.forEach((option, optIndex) => {
                 html += `<div class="form-check">
-                    <input class="form-check-input" type="radio" name="q${index}" value="${option}">
-                    <label class="form-check-label">${option}</label>
+                    <input class="form-check-input" type="radio" 
+                           name="q${index}" id="q${index}opt${optIndex}" 
+                           value="${option}">
+                    <label class="form-check-label" for="q${index}opt${optIndex}">
+                        ${option}
+                    </label>
                 </div>`;
             });
             html += '</div>';
@@ -154,12 +165,16 @@ function displayQuiz(quiz) {
     html += '</ol>';
     
     quizPreview.innerHTML = html;
+    quizResult.classList.remove('d-none');
+
+    // Scroll to the quiz result
+    quizResult.scrollIntoView({ behavior: 'smooth' });
 }
 
 // Load assignments
 async function loadAssignments() {
     try {
-        const response = await fetch('/api/assignments', {
+        const response = await fetch('http://localhost:5001/api/assignments', {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             }
@@ -205,7 +220,7 @@ function showAlert(message, type) {
         ${message}
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     `;
-    document.querySelector('.container').insertBefore(alertDiv, document.querySelector('.row'));
+    document.querySelector('.modal-body').insertBefore(alertDiv, quizForm);
     
     setTimeout(() => alertDiv.remove(), 5000);
 }

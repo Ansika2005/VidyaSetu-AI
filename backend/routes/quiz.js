@@ -17,23 +17,16 @@ router.post('/generate', authMiddleware, upload.single('content'), async (req, r
     try {
         let content = '';
 
-        // Log the request details for debugging
-        console.log('Request received:', {
-            hasFile: !!req.file,
-            fileType: req.file?.mimetype,
-            bodyContent: !!req.body.content,
-            user: req.user
-        });
+        console.log('Request body:', req.body);
+        console.log('File:', req.file);
 
         // Handle PDF file
         if (req.file) {
             if (req.file.mimetype === 'application/pdf') {
                 const data = await pdf(req.file.buffer);
                 content = data.text;
-                console.log('PDF content extracted:', content.substring(0, 100) + '...');
             } else {
                 content = req.file.buffer.toString('utf-8');
-                console.log('Text content extracted:', content.substring(0, 100) + '...');
             }
         } else if (req.body.content) {
             content = req.body.content;
@@ -43,31 +36,28 @@ router.post('/generate', authMiddleware, upload.single('content'), async (req, r
 
         const { quizType, questionCount, difficulty } = req.body;
 
-        // Validate required parameters
-        if (!quizType || !questionCount || !difficulty) {
-            return res.status(400).json({ 
-                message: 'Missing required parameters',
-                required: { quizType, questionCount, difficulty }
-            });
-        }
-
-        // Create prompt for quiz generation
-        const prompt = `Generate a ${difficulty} level quiz with ${questionCount} questions of type ${quizType} from the following content. Format the output as a JSON array of question objects with 'question', 'options' (for multiple choice), and 'correctAnswer' fields:\n\n${content}`;
+        // Format the prompt to get structured output
+        const prompt = `Generate a ${difficulty} level quiz with ${questionCount} questions based on this content: 
+                       "${content}"
+                       
+                       Format each question as a JSON object with these fields:
+                       - question (string): The question text
+                       - options (array): For multiple choice, 4 possible answers
+                       - correctAnswer (string): The correct answer
+                       
+                       Return an array of these question objects.`;
 
         const result = await model.generateContent(prompt);
         const response = await result.response;
-        const quizData = response.text();
+        const text = response.text();
 
-        // Parse and validate the generated quiz
+        // Clean and parse the response
+        const cleanedText = text.replace(/```json\n?|\n?```/g, '').trim();
         let quiz;
         try {
-            quiz = JSON.parse(quizData);
-            if (!Array.isArray(quiz)) {
-                throw new Error('Generated quiz is not in the expected format');
-            }
+            quiz = JSON.parse(cleanedText);
         } catch (error) {
-            console.error('Quiz parsing error:', error);
-            console.log('Raw quiz data:', quizData);
+            console.error('Failed to parse quiz JSON:', cleanedText);
             throw new Error('Failed to generate valid quiz format');
         }
 
@@ -80,8 +70,7 @@ router.post('/generate', authMiddleware, upload.single('content'), async (req, r
         console.error('Quiz generation error:', error);
         res.status(500).json({
             message: 'Error generating quiz',
-            error: error.message,
-            details: process.env.NODE_ENV === 'development' ? error.stack : undefined
+            error: error.message
         });
     }
 });

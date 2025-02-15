@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function loadChildrenOverview() {
     try {
-        const response = await fetch('/api/parent/children', {
+        const response = await fetch('http://localhost:5001/api/parent/children', {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             }

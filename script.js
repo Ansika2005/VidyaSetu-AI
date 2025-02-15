@@ -14,7 +14,7 @@ const handleLogin = async (e) => {
     const role = document.querySelector('#login select[name="role"]').value;
     
     try {
-        const response = await fetch('http://localhost:5000/api/auth/login', {
+        const response = await fetch('http://localhost:5001/api/auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -58,7 +58,7 @@ const handleSignup = async (e) => {
     try {
         console.log('Attempting signup with:', { name, email, role }); // Debug log
 
-        const response = await fetch('http://localhost:5000/api/auth/signup', {
+        const response = await fetch('http://localhost:5001/api/auth/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
